@@ -409,8 +409,8 @@ class MovingRotatingEnitity: public Entity
 
 void MovingRotatingEnitity::updateVelocity(sf::RenderWindow & window, sf::Clock & clock)
 {
-    float descount_factor = 0.35;
-    float velocity_coef = 40;
+    float descount_factor = 0.23;
+    float velocity_coef = 25;
     float elapsed = clock.getElapsedTime().asSeconds();
     if ((elapsed - lastLaunchedVelocityUpdate) > 0.1)
     {
@@ -513,7 +513,19 @@ void ChasingCat::updateFrame(sf::Clock & clock)
             if (frame.y == 1) frame.y = 0;
             else frame.y = (frame.y / 2 + 1) % 2 * 2;
         }
-        else frame.y = 1;
+        else 
+        {
+            if (frame.y == 0 || frame.y == 2)
+                frame.y = 1;
+            else if (frame.y == 1)
+                frame.y = 3;
+            else if (frame.y == 3)
+                frame.y = 5;
+            else if (frame.y == 5)
+                frame.y = 4;
+            else 
+                frame.y = 1;
+        }
         // std::cout << elapsed << ' ' << lastFrameUpdated << ' ' << frame.y << '\n';
         lastFrameUpdated = elapsed;
     }
@@ -537,7 +549,7 @@ void ChasingCat::draw(sf::RenderWindow & window)
 int main()
 {
     std::vector<std::string> textnames = {"Entity_Default", "kitten_texture"};
-    std::vector<std::string> textpaths = {"entity.png", "kitten_texture.png"};
+    std::vector<std::string> textpaths = {"entity.png", "kapa_texture.png"};
     TextureManager tm (textnames, textpaths);
     // sf::Texture texture;
     // if(!texture.loadFromFile("entity.png"))
@@ -575,7 +587,7 @@ int main()
         {
             entities[i]->logic(window, globalClock);
         }
-        window.clear();
+        window.clear(sf::Color(255, 255, 255, 255));
         for(int i = 0; i < entities.size(); ++i)
             entities[i]->draw(window);
         // entity.draw(window);
