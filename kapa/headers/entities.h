@@ -17,9 +17,6 @@ class Entity
         virtual void logic(sf::RenderWindow & window, sf::Clock & clock);
         virtual void draw(sf::RenderWindow & window);
 
-        void loadTexture(const char* texturePath);
-        void pushEvent();
-
         TextureManager textureManager;
         sf::Sprite sprite;
         sf::Vector2f scale;
@@ -29,5 +26,7 @@ class Entity
         sf::Vector2i frame;
         uint spriteSide;
 };
+
+void keka();
 
 #endif

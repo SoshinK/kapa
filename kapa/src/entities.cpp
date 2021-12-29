@@ -21,7 +21,7 @@ Entity::Entity(TextureManager & tm):
     angle(0.),
     velocity(sf::Vector2f(.0, .0)),
     frame(sf::Vector2i(0, 0)),
-    spriteSide(100)
+    spriteSide(constants::defaultSpriteSide)
     {
         sprite.setTexture(textureManager.textures[std::string("Entity_Default")]);
     }
@@ -33,7 +33,7 @@ Entity::Entity(TextureManager & tm, sf::Vector2f newpos, float newangle):
     angle(newangle),
     velocity(sf::Vector2f(.0, .0)),
     frame(sf::Vector2i(0, 0)),
-    spriteSide(100)
+    spriteSide(constants::defaultSpriteSide)
     {
         sprite.setTexture(textureManager.textures[std::string("Entity_Default")]);
     }
