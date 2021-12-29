@@ -2,6 +2,7 @@
 #include <map>
 #include <queue>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -494,13 +495,22 @@ class ChasingCat : public MovingRotatingEnitity
     public:
         ChasingCat(): MovingRotatingEnitity() {spriteSide=32; frame = sf::Vector2i(0, 2); scale = sf::Vector2f(8., 8.); lastFrameUpdated = 0;}
         ChasingCat(TextureManager* tm): MovingRotatingEnitity(tm) {sprite.setTexture(textureManager->textures[std::string("kitten_texture")]); spriteSide=32; frame = sf::Vector2i(0, 2); scale = sf::Vector2f(8., 8.); lastFrameUpdated = 0;}
-        ChasingCat(TextureManager* tm, sf::Vector2f pos, float angle): MovingRotatingEnitity(tm, pos, angle) {sprite.setTexture(textureManager->textures[std::string("kitten_texture")]); spriteSide=32; frame = sf::Vector2i(0, 2); scale = sf::Vector2f(8., 8.); lastFrameUpdated = 0;}
+        ChasingCat(TextureManager* tm, sf::Vector2f pos, float angle): MovingRotatingEnitity(tm, pos, angle) {
+            sprite.setTexture(textureManager->textures[std::string("kitten_texture")]); 
+            spriteSide=32; frame = sf::Vector2i(0, 2); 
+            scale = sf::Vector2f(8., 8.); 
+            lastFrameUpdated = 0;
+            lastMeow = 0;
+            meow.openFromFile("Meow.ogg");
+        }
         ~ChasingCat(){}
         virtual void draw(sf::RenderWindow & window);
         virtual void updateFrame(sf::Clock & clock);
 
         virtual void logic(sf::RenderWindow & window, sf::Clock & clock);
         float lastFrameUpdated;
+        float lastMeow;
+        sf::Music meow;
 };
 
 void ChasingCat::updateFrame(sf::Clock & clock)
@@ -536,6 +546,13 @@ void ChasingCat::logic(sf::RenderWindow & window, sf::Clock & clock)
     this->updateFrame(clock);
     this->rotationToMouse(window, clock);
     this->moveToMouse(window, clock);
+    float elapsed = clock.getElapsedTime().asSeconds();
+    if ((elapsed - lastMeow) > 2)
+    {   
+        meow.stop();
+        meow.play();
+        lastMeow = elapsed;
+    }
 }
 
 void ChasingCat::draw(sf::RenderWindow & window)
