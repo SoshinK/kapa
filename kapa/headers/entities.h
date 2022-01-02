@@ -38,6 +38,24 @@ class Entity
 
 std::ostream & operator<<(std::ostream & os, const Entity & entity);
 
+class Pursuer: public Entity
+{
+    public:
+        Pursuer();
+        Pursuer(TextureManager & tm);
+        Pursuer(TextureManager & tm, sf::Vector2f pos, float angle, sf::Vector2f velocity, uint id);
+        ~Pursuer(){}
+
+        virtual void logic(sf::RenderWindow & window, sf::Clock & clock);
+        virtual void updateVelocity(sf::RenderWindow & window, sf::Clock & clock);
+        virtual void moveToMouse(sf::RenderWindow & window, sf::Clock & clock);
+        virtual void rotationToMouse(sf::RenderWindow & window, sf::Clock & clock);
+        
+        float lastLaunchedRotation;
+        float lastLaunchedMoving;
+        float lastLaunchedVelocityUpdate;
+};
+
 
 
 #endif

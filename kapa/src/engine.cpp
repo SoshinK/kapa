@@ -32,8 +32,10 @@ void EntitySet::doCycle(sf::RenderWindow & window, sf::Clock & clock) const
         key->second->control();
         key->second->logic(window, clock);
         key->second->physics(window, clock);
-        key->second->draw(window);;
     }
+    window.clear();
+    for(auto key=entitySet_.begin(); key != entitySet_.end(); key++)
+        key->second->draw(window);
 }
 
 
