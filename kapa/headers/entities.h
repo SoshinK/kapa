@@ -1,6 +1,7 @@
 #ifndef ENTITIES_H
 #define ENTITIES_H
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "graphics.h"
 
@@ -9,24 +10,31 @@ class Entity
     public:
         Entity();
         Entity(TextureManager & tm);
-        Entity(TextureManager & tm, sf::Vector2f pos, float angle);
-        ~Entity();
+        Entity(TextureManager & tm, sf::Vector2f pos, float angle, sf::Vector2f velocity, uint id);
+        virtual ~Entity();
 
         virtual void control();
         virtual void physics(sf::RenderWindow & window, sf::Clock & clock);
         virtual void logic(sf::RenderWindow & window, sf::Clock & clock);
         virtual void draw(sf::RenderWindow & window);
-
-        TextureManager textureManager;
-        sf::Sprite sprite;
-        sf::Vector2f scale;
+    
         sf::Vector2f pos;
         float angle;
         sf::Vector2f velocity;
-        sf::Vector2i frame;
-        uint spriteSide;
+        sf::Vector2f scale;
+
+        const std::string name;
+        const uint id;
+
+        std::ostream & dump (std::ostream & os) const;
+
+    private:
+        TextureManager textureManager_;
+        sf::Sprite sprite_;
+        sf::Vector2i frame_;
+        uint spriteSide_;
 };
 
-void keka();
+std::ostream & operator<<(std::ostream & os, const Entity & entity);
 
 #endif

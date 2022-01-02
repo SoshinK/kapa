@@ -2,8 +2,8 @@
 CC=g++
 LD=ld
 CCFLAGS=-g -Wall -Werror -O3 -std=c++17
-TESTNAMES=entityTest
-LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+
+LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -fsanitize=address -fsanitize=undefined -fno-sanitize-recover=all -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fno-sanitize=null -fno-sanitize=alignment
 
 KAPA_DIR=./kapa
 INCLUDES_DIR=$(KAPA_DIR)/headers
@@ -42,3 +42,6 @@ $(BUILD_DIR)/%.o: $(SRCS_TESTS_DIR)/%.cpp
 
 clean:
 	rm $(BUILD_DIR)/*.o
+
+cleanall:
+	rm $(BUILD_DIR)/*
