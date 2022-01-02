@@ -11,6 +11,7 @@ Entity::Entity():
     scale(sf::Vector2f(1.0f, 1.0f)),
     name("entity"),
     id(0),
+    isAlive(true),
     textureManager_(TextureManager()),
     sprite_(sf::Sprite()),
     frame_(sf::Vector2i(0, 0)),
@@ -31,6 +32,7 @@ Entity::Entity(TextureManager & tm, sf::Vector2f pos, float angle, sf::Vector2f 
     scale(sf::Vector2f(1.0f, 1.0f)),
     name("entity"),
     id(id),
+    isAlive(true),
     sprite_(sf::Sprite()),
     frame_(sf::Vector2i(0, 0)),
     spriteSide_(constants::defaultSpriteSide)
@@ -60,7 +62,7 @@ void Entity::logic(sf::RenderWindow & window, sf::Clock & clock) {}
 std::ostream & Entity::dump (std::ostream & os) const
 {
     os << this->name \
-        << "[id" << this->id << "] pos=" \
+        << "[id" << this->id << "] isAlive=" << this->isAlive << " pos=" \
         << this->pos.x << ';' << this->pos.y\
         << " angle=" << this->angle \
         << " velocity=" << this->velocity.x << ';' << this->velocity.y \

@@ -11,18 +11,21 @@ SRCS_DIR=$(KAPA_DIR)/src
 BUILD_DIR=build
 SRCS_TESTS_DIR=$(KAPA_DIR)/tests
 
-TEST_ENTITY_TARGET=$(BUILD_DIR)/entityTest
+TEST_ENTITY_TARGET=$(BUILD_DIR)/test_entity
 OBJ_TEST_ENTITY=$(BUILD_DIR)/test_entity.o
 
-TEST_GRAPHICS_TARGET=$(BUILD_DIR)/graphicsTest
+TEST_GRAPHICS_TARGET=$(BUILD_DIR)/test_graphics
 OBJ_TEST_GRAPHICS=$(BUILD_DIR)/test_graphics.o
 
-_OBJS=entities.o graphics.o
+TEST_ENGINE_TARGET=$(BUILD_DIR)/test_engine
+OBJ_TEST_ENGINE=$(BUILD_DIR)/test_engine.o
+
+_OBJS=entities.o graphics.o engine.o
 OBJS = $(patsubst %,$(BUILD_DIR)/%,$(_OBJS))
 
 
 
-test: $(TEST_ENTITY_TARGET) $(TEST_GRAPHICS_TARGET)
+test: $(TEST_ENTITY_TARGET) $(TEST_GRAPHICS_TARGET) $(TEST_ENGINE_TARGET)
 
 # link entity test
 $(TEST_ENTITY_TARGET): $(OBJS) $(OBJ_TEST_ENTITY)
@@ -31,6 +34,10 @@ $(TEST_ENTITY_TARGET): $(OBJS) $(OBJ_TEST_ENTITY)
 #link graphics test
 $(TEST_GRAPHICS_TARGET): $(OBJS) $(OBJ_TEST_GRAPHICS)
 	$(CC) $^ -o $(TEST_GRAPHICS_TARGET) $(LDFLAGS)
+
+$(TEST_ENGINE_TARGET): $(OBJS) $(OBJ_TEST_ENGINE)
+	$(CC) $^ -o $(TEST_ENGINE_TARGET) $(LDFLAGS)
+
 
 # build all object files from src
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.cpp

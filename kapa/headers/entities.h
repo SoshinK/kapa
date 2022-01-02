@@ -25,8 +25,9 @@ class Entity
 
         const std::string name;
         const uint id;
+        bool isAlive;
 
-        std::ostream & dump (std::ostream & os) const;
+        std::ostream & dump(std::ostream & os) const;
 
     private:
         TextureManager textureManager_;
@@ -36,5 +37,7 @@ class Entity
 };
 
 std::ostream & operator<<(std::ostream & os, const Entity & entity);
+
+
 
 #endif
