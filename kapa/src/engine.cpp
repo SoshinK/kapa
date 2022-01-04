@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "engine.h"
+#include "utils.h"
 
 EntitySet::EntitySet() {}
 EntitySet::EntitySet(std::map<std::string, Entity*> entitySet):
@@ -38,7 +39,17 @@ void EntitySet::doCycle(sf::RenderWindow & window, sf::Clock & clock) const
         key->second->draw(window);
 }
 
-
+void EntitySet::detectCollisions()
+{
+    for(auto key=entitySet_.begin(); key != entitySet_.end(); key++)
+        for(auto secondKey=entitySet_.begin(); secondKey != entitySet_.end(); secondKey++)
+            if(key != secondKey)
+                if(vectorLen(key->second->pos - secondKey->second->pos) < constants::defaultSpriteSide)
+                {
+                    EventCollision* collision = new EventCollision(secondKey->second->pos);
+                    ((CollidableCircle*)key->second)->eventPhysicsQueue.push((Event*)collision);
+                }
+}
 
 // void EntitySet::cleanObjects()
 // {

@@ -5,6 +5,7 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include "entities.h"
+
 class EntitySet
 {
     public:
@@ -15,9 +16,12 @@ class EntitySet
         void doCycle(sf::RenderWindow & window, sf::Clock & clock) const;
         void cleanObjects();
         void dump() const;
+        void detectCollisions();
     private:
         std::map<std::string, Entity*> entitySet_;
 };
+
+
 
 
 #endif
